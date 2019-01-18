@@ -3,12 +3,16 @@ package com.codecool;
 public class TimerThread extends Thread {
     private Timer timer;
     private int id;
-    private String name;
+    private String timerName;
 
     public TimerThread(int id, String name) {
         this.timer = new Timer();
         this.id = id;
-        this.name = name;
+        this.timerName = name;
+    }
+
+    public String getTimerName() {
+        return timerName;
     }
 
     @Override
@@ -20,6 +24,6 @@ public class TimerThread extends Thread {
 
     @Override
     public String toString() {
-        return String.format("Name: %s, ThreadId: %d, Seconds: %d", name, id, timer.getTime());
+        return String.format("Name: %s, ThreadId: %d, Seconds: %d", timerName, id, timer.getTime());
     }
 }
