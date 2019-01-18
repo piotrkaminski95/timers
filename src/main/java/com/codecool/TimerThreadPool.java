@@ -16,6 +16,16 @@ public class TimerThreadPool {
         threadPool.put(name, factory.getTimerThread(name));
     }
 
+    public void printTimer() {
+        if (threadPool.isEmpty()) {
+            System.out.println("No timers available");
+        } else {
+            for (TimerThread timer : threadPool.values()) {
+                System.out.println(timer);
+            }
+        }
+    }
+
     public void printTimer(String name) {
         if (threadPool.containsKey(name)) {
             System.out.println(threadPool.get(name));

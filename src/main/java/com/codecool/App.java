@@ -43,7 +43,11 @@ public class App
                         }
                     } else if (command.startsWith("check")) {
                         String name = command.trim().substring(5);
-                        timerPool.printTimer(name);
+                        if (name.length() == 0) {
+                            timerPool.printTimer();
+                        } else {
+                            timerPool.printTimer(name);
+                        }
                     } else {
                         System.out.println("wrong command!");
                     }
