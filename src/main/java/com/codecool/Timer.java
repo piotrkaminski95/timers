@@ -7,6 +7,10 @@ public class Timer {
         this.time++;
     }
 
+    public void reset() {
+        time = 0;
+    }
+
     public int getTime() {
         return this.time;
     }

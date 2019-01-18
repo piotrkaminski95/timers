@@ -18,8 +18,20 @@ public class TimerThreadPool {
         return true;
     }
 
-    public TimerThread getTimer(String name) {
-        return threadPool.get(name);
+    public void printTimer(String name) {
+        if (threadPool.containsKey(name)) {
+            System.out.println(threadPool.get(name));
+        } else {
+            System.out.println(name + " is not exist");
+        }
+    }
+
+    public boolean startTimer(String name) {
+        if (threadPool.containsKey(name)) {
+            threadPool.get(name).start();
+            return true;
+        }
+        return false;
     }
 
     public boolean stopTimer(String name) {
@@ -28,5 +40,9 @@ public class TimerThreadPool {
             return true;
         }
         return false;
+    }
+
+    public boolean isStopped(String name) {
+        return threadPool.get(name).isStopped();
     }
 }

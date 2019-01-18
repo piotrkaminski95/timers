@@ -29,7 +29,7 @@ public class App
                             "quit - exit program");
                     break;
                 }
-                case "quite": {
+                case "quit": {
                     running = false;
                     break;
                 }
@@ -38,9 +38,14 @@ public class App
                     if (command.startsWith("start")) {
                         String name = command.trim().substring(5);
                         if (timerPool.addTimer(timerFactory.getTimerThread(name))) {
+                            timerPool.startTimer(name);
                             System.out.println("Started");
+                        } else if (timerPool.isStopped(name)) {
+                            System.out.println("deb: stopped restarting...");
+                            timerPool.startTimer(name);
+                            timerPool.printTimer(name);
                         } else {
-                            System.out.println(name + " exists");
+                            System.out.println(name + " already started");
                         }
                     } else if (command.startsWith("stop")) {
                         String name = command.trim().substring(4);
@@ -51,12 +56,7 @@ public class App
                         }
                     } else if (command.startsWith("check")) {
                         String name = command.trim().substring(5);
-                        TimerThread timer = timerPool.getTimer(name);
-                        if (timer != null) {
-                            System.out.println(timer);
-                        } else {
-                            System.out.println(name + " is not exist!");
-                        }
+                        timerPool.printTimer(name);
                     } else {
                         System.out.println("wrong command!");
                     }
