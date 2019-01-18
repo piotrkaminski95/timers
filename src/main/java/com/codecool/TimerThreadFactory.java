@@ -6,4 +6,8 @@ public class TimerThreadFactory {
     public TimerThread getTimerThread(String name) {
         return new TimerThread(++counter, name);
     }
+
+    public TimerThread resetTimerThread(TimerThread timerThread) {
+        return new TimerThread(timerThread.getTimerId(), timerThread.getTimerName());
+    }
 }

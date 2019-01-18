@@ -9,9 +9,10 @@ public class TimerThreadPool {
 
     public TimerThreadPool() {
         this.threadPool = new HashMap<>();
+        this.factory = new TimerThreadFactory();
     }
 
-    public boolean addTimer(String name) {
+    private boolean addTimer(String name) {
         if (threadPool.containsKey(name)) {
             return false;
         }
@@ -28,8 +29,19 @@ public class TimerThreadPool {
     }
 
     public boolean startTimer(String name) {
-        if (threadPool.containsKey(name)) {
+        if (addTimer(name)) {
+            System.out.println("deb: exists");
             threadPool.get(name).start();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean restartTimer(String name) {
+        if (threadPool.containsKey(name)) {
+            TimerThread timer = factory.resetTimerThread(threadPool.get(name));
+            threadPool.put(name, timer);
+            timer.start();
             return true;
         }
         return false;

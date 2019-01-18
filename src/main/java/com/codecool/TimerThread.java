@@ -17,6 +17,10 @@ public class TimerThread extends Thread {
         return timerName;
     }
 
+    public int getTimerId() {
+        return this.id;
+    }
+
     public boolean isStopped() {
         return stopped;
     }

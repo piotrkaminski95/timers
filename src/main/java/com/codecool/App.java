@@ -39,9 +39,11 @@ public class App
                         if (timerPool.startTimer(name)) {
                             System.out.println("Started");
                         } else if (timerPool.isStopped(name)) {
-                            System.out.println("deb: stopped restarting...");
-                            timerPool.startTimer(name);
-                            timerPool.printTimer(name);
+                            if (timerPool.restartTimer(name)) {
+                                System.out.println("Started");
+                            } else {
+                                System.out.println(name + " is not exist!");
+                            }
                         } else {
                             System.out.println(name + " already started");
                         }
