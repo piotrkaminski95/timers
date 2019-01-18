@@ -5,16 +5,17 @@ import java.util.Map;
 
 public class TimerThreadPool {
     private Map<String, TimerThread> threadPool;
+    private TimerThreadFactory factory;
 
     public TimerThreadPool() {
         this.threadPool = new HashMap<>();
     }
 
-    public boolean addTimer(TimerThread timer) {
-        if (threadPool.containsKey(timer.getTimerName())) {
+    public boolean addTimer(String name) {
+        if (threadPool.containsKey(name)) {
             return false;
         }
-        threadPool.put(timer.getTimerName(), timer);
+        threadPool.put(name, factory.getTimerThread(name));
         return true;
     }
 

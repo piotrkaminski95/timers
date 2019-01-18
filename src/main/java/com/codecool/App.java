@@ -13,7 +13,6 @@ public class App
 {
     public static void main( String[] args ) {
         TimerThreadPool timerPool = new TimerThreadPool();
-        TimerThreadFactory timerFactory = new TimerThreadFactory();
         Scanner input = new Scanner(System.in);
         boolean running = true;
         String command;
@@ -37,8 +36,7 @@ public class App
                 default: {
                     if (command.startsWith("start")) {
                         String name = command.trim().substring(5);
-                        if (timerPool.addTimer(timerFactory.getTimerThread(name))) {
-                            timerPool.startTimer(name);
+                        if (timerPool.startTimer(name)) {
                             System.out.println("Started");
                         } else if (timerPool.isStopped(name)) {
                             System.out.println("deb: stopped restarting...");
