@@ -10,8 +10,9 @@ public class App
         boolean running = true;
         String command;
         while (running) {
-            System.out.println("command(type ? for help) -> ");
+            System.out.print("\ncommand(type ? for help) -> ");
             command = input.nextLine();
+            System.out.println();
             switch (command) {
                 case "?": {
                     System.out.println(
