@@ -12,7 +12,11 @@ public class TimerThread extends Thread {
     }
 
     @Override
-    public void run() {}
+    public void run() {
+        while (!this.isInterrupted()) {
+            timer.increment();
+        }
+    }
 
     @Override
     public String toString() {
