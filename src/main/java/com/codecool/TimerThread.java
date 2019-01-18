@@ -1,6 +1,6 @@
 package com.codecool;
 
-public class Timer extends Thread {
+public class TimerThread extends Thread {
     @Override
     public void run() {}
 }
