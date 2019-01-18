@@ -12,12 +12,8 @@ public class TimerThreadPool {
         this.factory = new TimerThreadFactory();
     }
 
-    private boolean addTimer(String name) {
-        if (threadPool.containsKey(name)) {
-            return false;
-        }
+    private void addTimer(String name) {
         threadPool.put(name, factory.getTimerThread(name));
-        return true;
     }
 
     public void printTimer(String name) {
@@ -29,22 +25,24 @@ public class TimerThreadPool {
     }
 
     public boolean startTimer(String name) {
-        if (addTimer(name)) {
-            System.out.println("deb: exists");
-            threadPool.get(name).start();
+        if (threadPool.containsKey(name)) {
+            TimerThread timer = threadPool.get(name);
+            if (timer.isStopped()) {
+                restartTimer(timer);
+            } else {
+                return false;
+            }
             return true;
         }
-        return false;
+        addTimer(name);
+        threadPool.get(name).start();
+        return true;
     }
 
-    public boolean restartTimer(String name) {
-        if (threadPool.containsKey(name)) {
-            TimerThread timer = factory.resetTimerThread(threadPool.get(name));
-            threadPool.put(name, timer);
-            timer.start();
-            return true;
-        }
-        return false;
+    private void restartTimer(TimerThread timer) {
+        timer = factory.resetTimerThread(timer);
+        threadPool.put(timer.getTimerName(), timer);
+        timer.start();
     }
 
     public boolean stopTimer(String name) {

@@ -1,15 +1,8 @@
 package com.codecool;
 
 import java.util.Scanner;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-/**
- * Hello world!
- *
- */
-public class App 
+public class App
 {
     public static void main( String[] args ) {
         TimerThreadPool timerPool = new TimerThreadPool();
@@ -38,12 +31,6 @@ public class App
                         String name = command.trim().substring(5);
                         if (timerPool.startTimer(name)) {
                             System.out.println("Started");
-                        } else if (timerPool.isStopped(name)) {
-                            if (timerPool.restartTimer(name)) {
-                                System.out.println("Started");
-                            } else {
-                                System.out.println(name + " is not exist!");
-                            }
                         } else {
                             System.out.println(name + " already started");
                         }
