@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 public class App 
 {
     public static void main( String[] args ) {
-        ExecutorService executor = Executors.newCachedThreadPool();
+        TimerThreadPool timerPool = new TimerThreadPool();
         TimerThreadFactory timerFactory = new TimerThreadFactory();
         Scanner input = new Scanner(System.in);
         boolean running = true;
@@ -37,6 +37,28 @@ public class App
                 default: {
                     if (command.startsWith("start")) {
                         String name = command.trim().substring(5);
+                        if (timerPool.addTimer(timerFactory.getTimerThread(name))) {
+                            System.out.println("Started");
+                        } else {
+                            System.out.println(name + " exists");
+                        }
+                    } else if (command.startsWith("stop")) {
+                        String name = command.trim().substring(4);
+                        if (timerPool.stopTimer(name)) {
+                            System.out.println("Stopped");
+                        } else {
+                            System.out.println(name + " is not exist!");
+                        }
+                    } else if (command.startsWith("check")) {
+                        String name = command.trim().substring(5);
+                        TimerThread timer = timerPool.getTimer(name);
+                        if (timer != null) {
+                            System.out.println(timer);
+                        } else {
+                            System.out.println(name + " is not exist!");
+                        }
+                    } else {
+                        System.out.println("wrong command!");
                     }
                 }
             }
